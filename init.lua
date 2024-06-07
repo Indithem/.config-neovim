@@ -261,8 +261,8 @@ require("lazy").setup({
 		opts = {
 			signs = {
 				add = { text = "+" },
-				change = { text = "~" },
-				delete = { text = "_" },
+				change = { text = "#" },
+				delete = { text = "-" },
 				topdelete = { text = "‾" },
 				changedelete = { text = "~" },
 			},
@@ -392,7 +392,14 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
 			vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 			vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-			vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
+			vim.keymap.set(
+				"n",
+				"<leader><leader>",
+				builtin.buffers,
+				{ desc = "[ ] Find existing buffers using Telescope Search" }
+			)
+			-- TODO: The above line can be written in a single line, but during saving, it is auto-formatted to multiple lines.
+			-- need to disable this behavior.
 
 			-- Slightly advanced example of overriding default behavior and theme
 			vim.keymap.set("n", "<leader>/", function()
@@ -558,7 +565,8 @@ require("lazy").setup({
 					-- This may be unwanted, since they displace some of your code
 					if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
 						map("<leader>th", function()
-							vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) -- TODO: idk what this error is, but it may need to be fixed
+							vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+							-- TODO: idk what this error is, but it may need to be fixed
 						end, "[T]oggle Inlay [H]ints")
 					end
 				end,
@@ -904,9 +912,9 @@ require("lazy").setup({
 	-- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
 	--    This is the easiest way to modularize your config.
 	--
-	--  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
+	--  Uncomment the following line and add your plugins to `lua/lazy_plugins/*.lua` to get going.
 	--    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-	-- { import = 'custom.plugins' },
+	{ import = "lazy_plugins" },
 }, {
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the
